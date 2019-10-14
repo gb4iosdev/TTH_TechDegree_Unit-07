@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+struct Genres: Codable {
+    let genres: [Entity]
+    
+    enum CodingKeys: String, CodingKey {
+        case genres
+    }
+}

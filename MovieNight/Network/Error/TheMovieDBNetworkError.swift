@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TheMovieDBNetworkError {
+struct TheMovieDBNetworkError: Error {
     static let errorNum: [Int : [Int : String]] = [
         1 :     [200 :     "Success"],
         2 :     [501 :     "Invalid service: this service does not exist."],
