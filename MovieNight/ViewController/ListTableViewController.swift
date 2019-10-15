@@ -10,25 +10,51 @@ import UIKit
 
 class ListTableViewController: UITableViewController {
     
-    var dataType: ParameterKey?
+    var dataType: DataType?
     var genres: [Entity] = []
+    var actors: [Entity] = []
     let client = TheMovieDBAPIClient()
+    var dataTypeType: ListType.Type?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        client.getTheMovieDBData(from: URL(string: "https://api.themoviedb.org/3/genre/movie/list?api_key=77bed8fca392b4795936215c684e2e95&language=en-US"), toType: Genres.self) { [unowned self] entities, error in
-            if let entities = entities {
-                self.genres = entities.genres
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            } else {
-                print("Error is: \(String(describing: error))")
-            }
-
+        guard let dataType = dataType else {
+            print("Error: Entity for TheMovieDB API not initialized")
+            return
+        }
         
-            
+        switch dataType {
+        case .genre: dataTypeType = Genres.self
+        case .certification: dataTypeType = Genres.self
+        case .actor: dataTypeType = Actors.self
+        }
+        
+        let endPoint = dataType.endpoint()
+        print(endPoint.request)
+        switch dataType {
+        case .genre, .certification:
+            client.getTheMovieDBData(with: endPoint.request, toType: Genres.self) { [unowned self] entities, error in
+                if let entities = entities {
+                    self.genres = entities.genres
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                } else {
+                    print("Error is: \(String(describing: error))")
+                }
+            }
+        case .actor:
+            client.getTheMovieDBData(with: endPoint.request, toType: Actors.self) { [unowned self] entities, error in
+                if let entities = entities {
+                    self.actors = entities.actors
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                } else {
+                    print("Error is: \(String(describing: error))")
+                }
+            }
         }
         
         //let selectedIndexPaths = tableView.indexPathsForSelectedRows
@@ -50,13 +76,24 @@ extension ListTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return genres.count
+        //
+        guard let dataType = self.dataType else { return 0 }
+        
+        switch dataType {
+        case .genre: return genres.count
+        case .certification: return genres.count
+        case .actor: return actors.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let dataType = self.dataType else { return tableView.dequeueReusableCell(withIdentifier: "TMDBListCell")! }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TMDBListCell"), let textLabel = cell.textLabel {
-            textLabel.text = genres[indexPath.row].name
+            switch dataType {
+            case .genre: textLabel.text = genres[indexPath.row].name
+            case .certification: textLabel.text = genres[indexPath.row].name
+            case .actor: textLabel.text = actors[indexPath.row].name
+            }
             return cell
         } else {
             print("Error: failed to generate custom TMDBListCell cell")
@@ -86,7 +123,7 @@ extension ListTableViewController {
         }
         
         //Set the selected character on the PilotedCraft Controller to allow piloted craft detail to be retried & displayed.
-        genreController.dataType = .genre
+        genreController.dataType = DataType(rawValue: self.dataType!.rawValue + 1)
     }
     
 }

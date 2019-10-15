@@ -22,16 +22,9 @@ class TheMovieDBAPIClient {
         self.init(configuration: .default)
     }
     
-    func getTheMovieDBData<T: Codable>(from endpoint: URL?, toType type: T.Type, completionHandler completion: @escaping (T?, Error?) -> Void) {
+    func getTheMovieDBData<T: Codable>(with urlRequest: URLRequest, toType type: T.Type, completionHandler completion: @escaping (T?, Error?) -> Void) {
         
-        guard let starWarsAPIURL = endpoint else {
-            completion(nil, StarWarsAPIError.invalidURL)
-            return
-        }
-        
-        let request = URLRequest(url: starWarsAPIURL)
-        
-        let task = session.dataTask(with: request) { data, response, error in
+        let task = session.dataTask(with: urlRequest) { data, response, error in
             if let data = data {
                 guard let httpResponse = response as? HTTPURLResponse else {
                     completion(nil, StarWarsAPIError.requestFailed)

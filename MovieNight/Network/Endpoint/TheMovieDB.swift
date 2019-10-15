@@ -10,44 +10,40 @@ import Foundation
 
 enum TheMovieDB {
     case discover(genre: String)
-    
-    //Takes a dictionary of parameter key/value pairs where the value is a string, and returns a URL query string.
-    //With format key=value&nextKey=nextValue etc.
-    func encodeParametersForURL(_ parameters: [ParameterKey : String]) -> String {
-        
-        var parametersAsStrings = [(String, String)]()
-        
-        for key in parameters.keys {
-            let percentEncodedParameter =  parameters[key]!.percentEncoded()
-            parametersAsStrings.append((key.rawValue, percentEncodedParameter))
-        }
-        
-        let encodedParameters = parametersAsStrings.map { "\($0)=\($1)" }
-        return encodedParameters.joined(separator: "&")
-        
-    }
+    case genreList
+    case actorList
 }
 
 extension TheMovieDB: Endpoint {
     var path: String {
         switch self {
-        case .discover: return "/discover"
+        case .discover: return "/3/discover"
+        case .genreList: return "/3/genre/movie/list"
+        case .actorList: return "/3/person/popular"
         }
     }
     
     var queryParameters: [URLQueryItem] {
+        
+        var result = [URLQueryItem]()
+        
+        //Set common query items
+        result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: "77bed8fca392b4795936215c684e2e95"))
+        
         switch self {
         case .discover(let genre):
-            var result = [URLQueryItem]()
-            
             let genre = URLQueryItem(name: ParameterKey.genre.rawValue, value: genre)
             result.append(genre)
-            
-            return result
+        case .genreList:
+            result.append(URLQueryItem(name: ParameterKey.language.rawValue, value: "en-US"))
+        case .actorList:
+            break
         }
+        
+        return result
     }
     
     var base: String {
-        return "https://api.themoviedb.org/3"
+        return "https://api.themoviedb.org"
     }
 }
