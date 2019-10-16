@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct Genres: Codable, ListType {
-    var genres: [Entity]
+struct Genres: Codable {
+    var results: [Entity] = []
     
     enum CodingKeys: String, CodingKey {
-        case genres
+        case results = "genres"
     }
 }

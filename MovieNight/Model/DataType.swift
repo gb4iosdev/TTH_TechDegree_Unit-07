@@ -20,12 +20,4 @@ enum DataType: Int {
         case .actor: return .actorList
         }
     }
-    
-    func listType() -> ListType.Type {
-        switch self {
-        case .genre: return Genres.self
-        case .certification: return Genres.self
-        case .actor: return Actors.self
-        }
-    }
 }

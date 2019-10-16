@@ -28,7 +28,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="123.5" height="97.5"/>
                                         <state key="normal" image="bubble-empty"/>
                                         <connections>
-                                            <segue destination="Qj6-vO-ER7" kind="show" id="9Lx-so-NzV"/>
+                                            <action selector="leftButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bP8-zH-k2R"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cL-bZ-Wuy" userLabel="user2Button">
@@ -76,6 +76,9 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="leftButton" destination="nBz-Wz-tyg" id="wOs-hj-Io4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -138,7 +141,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Next" id="uyF-If-L2J">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="Qj6-vO-ER7" kind="show" id="yae-o5-ebq"/>
+                                <segue destination="Qj6-vO-ER7" kind="show" identifier="RecursiveSegue" id="yae-o5-ebq"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -151,7 +154,6 @@
         <!--Navigation Controller-->
         <scene sceneID="8hO-OX-V5H">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Hvg-80-4hs" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0bK-3B-h1b" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3Sl-Lf-Ih2">
@@ -165,6 +167,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="3kQ-es-HOn"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hvg-80-4hs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="50.724637681159422" y="20.758928571428569"/>
         </scene>

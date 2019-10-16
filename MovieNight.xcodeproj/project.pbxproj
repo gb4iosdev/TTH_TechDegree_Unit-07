@@ -27,7 +27,6 @@
 		86806A232353AE70004F1580 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86806A222353AE70004F1580 /* Endpoint.swift */; };
 		86E3B3D9235547E5000D9400 /* DataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E3B3D8235547E5000D9400 /* DataType.swift */; };
 		86E3B3DB23554C58000D9400 /* Actors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E3B3DA23554C58000D9400 /* Actors.swift */; };
-		86E3B3DD23554DA6000D9400 /* ListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E3B3DC23554DA6000D9400 /* ListType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,7 +52,6 @@
 		86806A222353AE70004F1580 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		86E3B3D8235547E5000D9400 /* DataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataType.swift; sourceTree = "<group>"; };
 		86E3B3DA23554C58000D9400 /* Actors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actors.swift; sourceTree = "<group>"; };
-		86E3B3DC23554DA6000D9400 /* ListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +110,6 @@
 		867D3A6623523236006106C9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				86E3B3DC23554DA6000D9400 /* ListType.swift */,
 				86806A20235341E7004F1580 /* Entity.swift */,
 				867D3A6723523240006106C9 /* Genres.swift */,
 				86E3B3DA23554C58000D9400 /* Actors.swift */,
@@ -254,7 +251,6 @@
 				8640CA9A23522DF400E1410A /* AppDelegate.swift in Sources */,
 				86806A21235341E7004F1580 /* Entity.swift in Sources */,
 				86806A1923533F94004F1580 /* Show.swift in Sources */,
-				86E3B3DD23554DA6000D9400 /* ListType.swift in Sources */,
 				867D3A6823523240006106C9 /* Genres.swift in Sources */,
 				86806A1723533F6C004F1580 /* ParameterKey.swift in Sources */,
 			);
