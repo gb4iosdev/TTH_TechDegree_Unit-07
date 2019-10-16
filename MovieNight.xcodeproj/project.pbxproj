@@ -84,10 +84,10 @@
 		8640CA9823522DF400E1410A /* MovieNight */ = {
 			isa = PBXGroup;
 			children = (
-				867D8FAD2354B31F00A95E53 /* ViewController */,
-				867D3A6623523236006106C9 /* Model */,
 				8640CA9923522DF400E1410A /* AppDelegate.swift */,
 				8640CA9D23522DF400E1410A /* Main.storyboard */,
+				867D8FAD2354B31F00A95E53 /* ViewController */,
+				867D3A6623523236006106C9 /* Model */,
 				867D8FAE2354B33900A95E53 /* Network */,
 				867D3A732352AE40006106C9 /* DataSource */,
 				86806A1A23533FB4004F1580 /* Extensions */,

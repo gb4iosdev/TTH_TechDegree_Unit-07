@@ -28,7 +28,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="123.5" height="97.5"/>
                                         <state key="normal" image="bubble-empty"/>
                                         <connections>
-                                            <action selector="leftButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bP8-zH-k2R"/>
+                                            <segue destination="Qj6-vO-ER7" kind="show" identifier="FirstSegue" id="zWo-g8-JRJ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cL-bZ-Wuy" userLabel="user2Button">
@@ -76,9 +76,6 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="leftButton" destination="nBz-Wz-tyg" id="wOs-hj-Io4"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

@@ -14,17 +14,6 @@ class ListTableViewController<T: Codable>: UITableViewController {
     var allEntities: T?
     var results: [Entity] = []
     let client = TheMovieDBAPIClient()
-    
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//
-//    init(dataType: DataType, allEntities: T) {
-//        self.dataType = dataType
-//        self.allEntities = allEntities
-//        super.init(style: .plain)
-//    }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +35,7 @@ class ListTableViewController<T: Codable>: UITableViewController {
         let endPoint = dataType.endpoint()
         //print(endPoint.request)
         
-        client.getTheMovieDBData(with: endPoint.request, toType: allEntities.self) { [weak self] entities, error in
+        /*client.getTheMovieDBData(with: endPoint.request, toType: allEntities.self) { [weak self] entities, error in
             if let entities = entities {
                 self?.results = entities.results    //Setting the tableView datasource
                 DispatchQueue.main.async {
@@ -55,7 +44,7 @@ class ListTableViewController<T: Codable>: UITableViewController {
             } else {
                 print("Error is: \(String(describing: error))")
             }
-        }
+        }*/
         
         
         //let selectedIndexPaths = tableView.indexPathsForSelectedRows
