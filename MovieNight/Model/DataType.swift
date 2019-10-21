@@ -13,11 +13,21 @@ enum DataType: Int {
     case certification
     case actor
     
-    func endpoint() -> TheMovieDB {
+    var endPoint: TheMovieDB {
         switch self {
         case .genre: return .genreList
-        case .certification: return .genreList
+        case .certification: return .certificationList
         case .actor: return .actorList
         }
     }
+    
+    //Returns the next type - To assist with view controller transitions.
+    var nextType: DataType {
+        switch self {
+        case .genre:            return .certification
+        case .certification:    return .actor
+        case .actor:            return .genre   //Should never execute
+        }
+    }
+
 }

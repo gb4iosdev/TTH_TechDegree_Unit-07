@@ -11,14 +11,16 @@ import Foundation
 enum TheMovieDB {
     case discover(genre: String)
     case genreList
+    case certificationList
     case actorList
 }
 
 extension TheMovieDB: Endpoint {
     var path: String {
         switch self {
-        case .discover: return "/3/discover"
+        case .discover: return "/3/discover/movie"
         case .genreList: return "/3/genre/movie/list"
+        case .certificationList: return "/3/certification/movie/list"
         case .actorList: return "/3/person/popular"
         }
     }
@@ -36,6 +38,8 @@ extension TheMovieDB: Endpoint {
             result.append(genre)
         case .genreList:
             result.append(URLQueryItem(name: ParameterKey.language.rawValue, value: "en-US"))
+        case .certificationList:
+            break
         case .actorList:
             break
         }

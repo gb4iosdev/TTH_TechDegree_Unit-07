@@ -27,5 +27,7 @@ let apiKey = "77bed8fca392b4795936215c684e2e95"
 //Get popular people:
 //https://api.themoviedb.org/3/person/popular?api_key=77bed8fca392b4795936215c684e2e95
 
+//Certifications List
+//https://api.themoviedb.org/3/certification/movie/list?api_key=77bed8fca392b4795936215c684e2e95
 
 

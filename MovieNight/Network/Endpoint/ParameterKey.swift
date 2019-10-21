@@ -10,7 +10,7 @@ import Foundation
 
 //List of parameter keys that can be used in this application
 enum ParameterKey: String {
-    case genre
+    case genre = "with_genres"
     case certification
     case actor
     case api_key
