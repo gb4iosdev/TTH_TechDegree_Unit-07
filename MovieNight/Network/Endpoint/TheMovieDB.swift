@@ -9,7 +9,7 @@
 import Foundation
 
 enum TheMovieDB {
-    case discover(genre: String)
+    case discover(genres: String, certifications: String)
     case genreList
     case certificationList
     case actorList
@@ -33,12 +33,14 @@ extension TheMovieDB: Endpoint {
         result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: "77bed8fca392b4795936215c684e2e95"))
         
         switch self {
-        case .discover(let genre):
-            let genre = URLQueryItem(name: ParameterKey.genre.rawValue, value: genre)
+        case .discover(let genres, let certifications):
+            let genre = URLQueryItem(name: ParameterKey.genres.rawValue, value: genres)
+            let certifications = URLQueryItem(name: ParameterKey.certifications.rawValue, value: certifications)
             result.append(genre)
         case .genreList:
             result.append(URLQueryItem(name: ParameterKey.language.rawValue, value: "en-US"))
         case .certificationList:
+            result.append(URLQueryItem(name: ParameterKey.certificationCountry.rawValue, value: "CA"))
             break
         case .actorList:
             break

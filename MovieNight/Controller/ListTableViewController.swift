@@ -66,9 +66,9 @@ class ListTableViewController: UITableViewController {
             UserSelection.update(for: user, genres: selectedGenres)
         case .certification:
             //Save selected entities
-            var selectedCertifications: [String] = []
+            var selectedCertifications: [CertificationEntity] = []
             for row in selectedIndexPaths.map({ $0.row }) {
-                selectedCertifications.append(currentViewController.certifications[row].certification)
+                selectedCertifications.append(currentViewController.certifications[row])
             }
             UserSelection.update(for: user, certifications: selectedCertifications)
         }

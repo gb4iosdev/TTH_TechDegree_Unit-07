@@ -8,11 +8,12 @@
 
 import Foundation
 
-//List of parameter keys that can be used in this application
+//List of parameter keys that can be used in this application, and their query string representations.
 enum ParameterKey: String {
-    case genre = "with_genres"
-    case certification
-    case actor
+    case genres = "with_genres"
+    case certifications = "certification.lte"
+    case certificationCountry = "certification_country"
+    case actors
     case api_key
     case language
 }

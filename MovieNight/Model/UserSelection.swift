@@ -11,25 +11,25 @@ import Foundation
 struct UserSelection {
     
     static private var user1Genres: Set<Int>?
-    static private var user1Certifications: Set<String>?
+    static private var user1Certifications: [CertificationEntity]?
     static private var user1Actors: Set<Int>?
     
     static private var user2Genres: Set<Int>?
-    static private var user2Certifications: Set<String>?
+    static private var user2Certifications: [CertificationEntity]?
     static private var user2Actors: Set<Int>?
     
     static private var user1Done: Bool?
     static private var user2Done: Bool?
     
-    static func update(for user: User, genres: [Int]? = nil, certifications: [String]? = nil, actors: [Int]? = nil) {
+    static func update(for user: User, genres: [Int]? = nil, certifications: [CertificationEntity]? = nil, actors: [Int]? = nil) {
         switch user {
         case .user1:
             if let genres = genres { user1Genres = Set(genres) }
-            if let certifications = certifications { user1Certifications = Set(certifications) }
+            if let certifications = certifications { user1Certifications = certifications }
             if let actors = actors { user1Actors = Set(actors) }
         case .user2:
             if let genres = genres { user2Genres = Set(genres) }
-            if let certifications = certifications { user2Certifications = Set(certifications) }
+            if let certifications = certifications { user2Certifications = certifications }
             if let actors = actors { user2Actors = Set(actors) }
         }
     }
@@ -66,6 +66,15 @@ struct UserSelection {
         
         let combinedSet = user1Genres.union(user2Genres)
         return combinedSet.map{ String($0) }.joined(separator: ",")
+    }
+    
+    static func hightestCommonCertification() -> String? {
+        //Guard statement here checking if there are any selections...
+        
+        //Determine max and min heights
+        let user1SortedCertifications = user1Certifications?.sorted(by: { $0.order < $1.order })
+        
+        return ""
     }
     
 }
