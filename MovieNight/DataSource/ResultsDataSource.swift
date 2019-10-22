@@ -29,13 +29,18 @@ class ResultsDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let movieCell = tableView.dequeueReusableCell(withIdentifier: "MovieCell") else { return UITableViewCell() }
+        guard let movieCell = tableView.dequeueReusableCell(withIdentifier: MovieCell.reuseIdentifier) as? MovieCell else {
+            
+            print("Error:  Failed to initialize Movie Cell")
+            return UITableViewCell()
+        }
+        
         //let movie = movie(at: indexPath)
         //movieCell.title = movie.name
         //movieCell.subTitle = movie.longDescription
         //movieCell.accessoryType = .disclosureIndicator
-        
-        movieCell.textLabel?.text = movies[indexPath.row].title
+        movieCell.title.text = movies[indexPath.row].title
+        movieCell.subTitle.text = movies[indexPath.row].overview
         
         //movieCell.artwork = movie.artworkState == .downloaded ? movie.artwork! : UIImage(named: "MovieImagePlaceholder")!
         
@@ -55,6 +60,9 @@ class ResultsDataSource: NSObject, UITableViewDataSource {
     func update(with movies: [Movie]) {
         self.movies = movies
     }
-
+    
+    func append(movies: [Movie]) {
+        self.movies.append(contentsOf: movies)
+    }
     
 }

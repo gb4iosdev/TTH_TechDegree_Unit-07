@@ -171,13 +171,52 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" id="hvE-ZQ-SK0">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" id="hvE-ZQ-SK0" customClass="MovieCell" customModule="MovieNight" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hvE-ZQ-SK0" id="tG4-FW-UUi">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iTunesArtwork" translatesAutoresizingMaskIntoConstraints="NO" id="OSp-tP-IBx">
+                                            <rect key="frame" x="8" y="2" width="40" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="R6o-28-3TX"/>
+                                                <constraint firstAttribute="width" constant="40" id="nty-9u-fMu"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ffF-nd-P9I">
+                                            <rect key="frame" x="64" y="2" width="47.5" height="40.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iht-RQ-6CQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="33.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subTitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xgn-xh-AmH">
+                                                    <rect key="frame" x="0.0" y="24.5" width="47.5" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ffF-nd-P9I" firstAttribute="leading" secondItem="OSp-tP-IBx" secondAttribute="trailing" constant="16" id="Brr-0W-PuR"/>
+                                        <constraint firstItem="OSp-tP-IBx" firstAttribute="leading" secondItem="tG4-FW-UUi" secondAttribute="leading" constant="8" id="TLe-0c-FX3"/>
+                                        <constraint firstItem="OSp-tP-IBx" firstAttribute="centerY" secondItem="tG4-FW-UUi" secondAttribute="centerY" id="xmd-5w-GMN"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <constraints>
+                                    <constraint firstItem="ffF-nd-P9I" firstAttribute="centerY" secondItem="hvE-ZQ-SK0" secondAttribute="centerY" id="n8T-52-8y2"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="artwork" destination="OSp-tP-IBx" id="hau-1i-eSw"/>
+                                    <outlet property="subTitle" destination="xgn-xh-AmH" id="S0c-VM-3Sj"/>
+                                    <outlet property="title" destination="iht-RQ-6CQ" id="FCm-ko-cqW"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -215,6 +254,7 @@
         <image name="attributionLogo" width="358" height="141"/>
         <image name="bg-iphone6plus" width="1241" height="2209"/>
         <image name="bubble-empty" width="123.5" height="97.5"/>
+        <image name="iTunesArtwork" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="7IE-kV-YOk"/>

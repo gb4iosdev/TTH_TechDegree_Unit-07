@@ -16,4 +16,6 @@ enum ParameterKey: String {
     case actors
     case api_key
     case language
+    case page
+    case sortBy = "sort_by"
 }

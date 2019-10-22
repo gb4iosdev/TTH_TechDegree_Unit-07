@@ -12,6 +12,7 @@ class ResultsTableViewController: UITableViewController {
     
     var endpoint: Endpoint?
     let client = TheMovieDBAPIClient()
+    let moviePageLimit = 10
     
     lazy var dataSource: ResultsDataSource = {
         return ResultsDataSource(movies: [], tableView: self.tableView)
@@ -20,24 +21,39 @@ class ResultsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let endPoint = endpoint else {
+        guard let endpoint = self.endpoint else {
             print("Error: Endpoint not initialized")
             return
         }
         
         tableView.dataSource = dataSource
         
-        print(endPoint.request)
+        print(endpoint.request)
         
-        client.getTheMovieDBData(with: endPoint.request, toType: Movies.self) { [unowned self] entities, error in
+        fetchMovies(at: endpoint, page: 1)
+        
+        self.title = "Recommendations"
+        
+    }
+}
+
+//MARK: - Networking
+extension ResultsTableViewController {
+    
+    func fetchMovies(at endpoint: Endpoint, page: Int) {
+        client.getTheMovieDBData(with: endpoint.requestForPage(page), toType: Movies.self) { [weak self] entities, error in
+            
             if let entities = entities {
-                DispatchQueue.main.async {
-                    //self.tempDataSource = entities.results
-                    print("entities count is: \(entities.results.count)")
-                    print("entities are: \(entities.results.map{$0.title})")
-                    print("totalpages: \(entities.totalPages)")
-                    self.dataSource.update(with: entities.results)
-                    self.tableView.reloadData()
+                //Add results to dataSource
+                self?.dataSource.append(movies: entities.results)
+                
+                //Check if this is the last page to fetch
+                if let pageLimit = self?.moviePageLimit, page < min(entities.totalPages, pageLimit) {
+                    self?.fetchMovies(at: endpoint, page: page + 1)
+                } else {                   //Have added the last page of data.  Refresh tableView
+                    DispatchQueue.main.async {
+                        self?.tableView.reloadData()
+                    }
                 }
             } else {
                 print("Error is: \(String(describing: error))")
@@ -46,3 +62,4 @@ class ResultsTableViewController: UITableViewController {
         
     }
 }
+

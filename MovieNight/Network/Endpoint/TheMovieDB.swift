@@ -48,7 +48,7 @@ extension TheMovieDB: Endpoint {
                 result.append(actorsQueryItem)
             }
             result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: apiKey))
-
+            result.append(URLQueryItem(name: ParameterKey.sortBy.rawValue, value: "popularity.desc"))
         case .genreList:
             result.append(URLQueryItem(name: ParameterKey.language.rawValue, value: "en-US"))
             result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: apiKey))
