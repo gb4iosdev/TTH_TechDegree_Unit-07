@@ -8,7 +8,7 @@
 
 import Foundation
 
-let apiKey = "77bed8fca392b4795936215c684e2e95"
+//apiKey: "77bed8fca392b4795936215c684e2e95"
 
 //Just some example URL's to document what I'm trying to get to:
 
@@ -29,5 +29,19 @@ let apiKey = "77bed8fca392b4795936215c684e2e95"
 
 //Certifications List
 //https://api.themoviedb.org/3/certification/movie/list?api_key=77bed8fca392b4795936215c684e2e95
+
+
+//IMAGES:
+//Poster path in the movie will be for example:                 /udDclJoHjfjb8Ekgsd4FDteOkCU.jpg
+
+//For small image:
+//https://image.tmdb.org/t/p/w92/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg
+
+//For largest Image:
+//https://image.tmdb.org/t/p/w780/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg
+
+//Other sizes:
+//"w154","w185","w342","w500"
+
 
 

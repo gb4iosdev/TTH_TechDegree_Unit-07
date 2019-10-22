@@ -32,6 +32,8 @@ class ListTableViewController: UITableViewController {
             return
         }
         
+        initializeUI(for: dataType)
+        
         fetch(for: dataType)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TMDBListCell")
@@ -40,51 +42,83 @@ class ListTableViewController: UITableViewController {
     
     @IBAction func navBarNextPressed(_ sender: UIBarButtonItem) {
         
-        //
-        guard let currentViewController = navigationController?.topViewController as? ListTableViewController, let currentType = currentViewController.dataType else { return }
+        //Ensure we can access the active view controller, and have a datatype and user specified:
+        guard let currentViewController = navigationController?.topViewController as? ListTableViewController, let currentType = currentViewController.dataType, let user = currentViewController.user else { return }
         
-        guard let selectedIndexPaths = currentViewController.tableView.indexPathsForSelectedRows, let user = currentViewController.user else { return }
+        guard let selectedIndexPaths = currentViewController.tableView.indexPathsForSelectedRows else {                //Proceed if no items selected
+            if currentType == .actor {
+                UserSelection.setUserDone(user)
+                self.navigationController?.popToRootViewController(animated: true)
+            } else {
+                showNextController(after: currentType)
+            }
+            return
+        }
+        
         print("selectedIndexPaths are: \(selectedIndexPaths)")
+
         
         switch currentType {      //Save selected entities and Transition to next view controller
-        case .actor:    // Save actors and Exit back to main screen
-            var selectedActors: [Int] = []
-            for row in selectedIndexPaths.map({ $0.row }) {
-                selectedActors.append(currentViewController.actors[row].id)
-            }
-            UserSelection.update(for: user, actors: selectedActors)
-            
-            UserSelection.setUserDone(user)
-            self.navigationController?.popToRootViewController(animated: true)
-            return
+        
         case .genre:
-            //Save selected entities
-            var selectedGenres: [Int] = []
-            for row in selectedIndexPaths.map({ $0.row }) {
-                selectedGenres.append(currentViewController.genres[row].id)
+            //Check that max selections are not exceeded
+            if selectedIndexPaths.count > currentType.maxSelections {
+                alertUser(withTitle: "Too many Genres selected", message: "Please select a maximum of 5 Genres")
+            } else {
+                //Save selected entities
+                var selectedGenres: [Int] = []
+                for row in selectedIndexPaths.map({ $0.row }) {
+                    selectedGenres.append(currentViewController.genres[row].id)
+                }
+                UserSelection.update(for: user, genres: selectedGenres)
+                showNextController(after: currentType)
             }
-            UserSelection.update(for: user, genres: selectedGenres)
+            
         case .certification:
-            //Save selected entities
-            var selectedCertifications: [CertificationEntity] = []
-            for row in selectedIndexPaths.map({ $0.row }) {
-                selectedCertifications.append(currentViewController.certifications[row])
+            //Save selection – should only be one
+            var selectedCertification: CertificationEntity
+            
+            selectedCertification = currentViewController.certifications[selectedIndexPaths[0].row]
+            UserSelection.update(for: user, certification: selectedCertification)
+            showNextController(after: currentType)
+        case .actor:    // Save actors and Exit back to main screen
+            //Check that max selections are not exceeded
+            if selectedIndexPaths.count > currentType.maxSelections {
+                alertUser(withTitle: "Too many Actors selected", message: "Please select a maximum of 5 Actors")
+            } else {
+                var selectedActors: [Int] = []
+                for row in selectedIndexPaths.map({ $0.row }) {
+                    selectedActors.append(currentViewController.actors[row].id)
+                }
+                UserSelection.update(for: user, actors: selectedActors)
+                
+                UserSelection.setUserDone(user)
+                self.navigationController?.popToRootViewController(animated: true)
             }
-            UserSelection.update(for: user, certifications: selectedCertifications)
         }
+    }
+    
+    func showNextController(after currentType: DataType) {
+        
+        guard let currentViewController = navigationController?.topViewController as? ListTableViewController else { return }
         
         //Create and configure next TableViewController
         let nextViewController = ListTableViewController()
         nextViewController.dataType = currentViewController.dataType?.nextType
         nextViewController.user = currentViewController.user
         nextViewController.navigationItem.rightBarButtonItem = nextBarButtonItem
-        nextViewController.tableView.allowsMultipleSelection = true
+        
+        //Configure for single or multiple selection based on type
+        if currentType == .genre {
+            nextViewController.tableView.allowsMultipleSelection = false
+        } else {
+            nextViewController.tableView.allowsMultipleSelection = true
+        }
         
         //Push onto Navigation stack
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
-    
-  
+
     
     
     // MARK: - Table view data source
@@ -110,7 +144,7 @@ class ListTableViewController: UITableViewController {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TMDBListCell"), let textLabel = cell.textLabel {
             switch dataType {
             case .genre: textLabel.text = genres[indexPath.row].name
-            case .certification: textLabel.text = certifications[indexPath.row].certification
+            case .certification: textLabel.text = certifications[indexPath.row].name
             case .actor: textLabel.text = actors[indexPath.row].name
             }
             return cell
@@ -128,6 +162,24 @@ class ListTableViewController: UITableViewController {
     }
     
     
+}
+
+//MARK: - Helper Methods
+extension ListTableViewController {
+    
+    func initializeUI(for type: DataType) {
+        //Navigation Bar Title
+        self.title = type.title()
+    }
+    
+    func alertUser(withTitle title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(action)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+
 }
 
 //MARK: - Networking
@@ -153,6 +205,7 @@ extension ListTableViewController {
                 if let entities = entities {
                     if let currentViewController = self.navigationController?.topViewController as? ListTableViewController {
                         currentViewController.certifications = entities.results.results
+                        currentViewController.certifications.sort(by: { $0.order < $1.order })
                     }
                     DispatchQueue.main.async {
                         self.tableView.reloadData()

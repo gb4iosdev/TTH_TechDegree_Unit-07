@@ -19,6 +19,8 @@ class StartScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        initializeUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,6 +62,20 @@ class StartScreenViewController: UIViewController {
     
 }
 
+//MARK: - Helper Methods
+extension StartScreenViewController {
+    
+    func initializeUI() {
+        
+        //Navigation Bar Title
+        let font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        let attributes: [NSAttributedString.Key: Any] = [  .font: font,
+                                                           .foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = attributes
+    }
+}
+
+
 //MARK: - Segues
 extension StartScreenViewController {
     
@@ -84,6 +100,7 @@ extension StartScreenViewController {
             
             nextListController.dataType = .genre
             nextListController.user = activeUser
+            nextListController.tableView.allowsMultipleSelection = true
             
         } else if segue.identifier == "ResultsSegue" {
             guard let resultsListController = segue.destination as? ResultsTableViewController else {
@@ -91,11 +108,9 @@ extension StartScreenViewController {
                 return
             }
             
-            if let selectedGenres = UserSelection.combinedGenres() {
-                resultsListController.endpoint = TheMovieDB.discover(genre: selectedGenres)
-            }
-            
             //Prepare endpoint based on both user's selections
+            resultsListController.endpoint = TheMovieDB.discover(genres: UserSelection.combinedGenres(), certifications: UserSelection.hightestCommonCertification(), actors: UserSelection.combinedActors())
+            
         } else {
             print("Error:  Segue identifier not registered")
         }

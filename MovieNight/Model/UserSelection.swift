@@ -10,26 +10,26 @@ import Foundation
 
 struct UserSelection {
     
-    static private var user1Genres: Set<Int>?
-    static private var user1Certifications: [CertificationEntity]?
-    static private var user1Actors: Set<Int>?
+    static private var user1Genres = Set<Int>()
+    static private var user1Certification: CertificationEntity?
+    static private var user1Actors = Set<Int>()
     
-    static private var user2Genres: Set<Int>?
-    static private var user2Certifications: [CertificationEntity]?
-    static private var user2Actors: Set<Int>?
+    static private var user2Genres = Set<Int>()
+    static private var user2Certification: CertificationEntity?
+    static private var user2Actors = Set<Int>()
     
     static private var user1Done: Bool?
     static private var user2Done: Bool?
     
-    static func update(for user: User, genres: [Int]? = nil, certifications: [CertificationEntity]? = nil, actors: [Int]? = nil) {
+    static func update(for user: User, genres: [Int]? = nil, certification: CertificationEntity? = nil, actors: [Int]? = nil) {
         switch user {
         case .user1:
             if let genres = genres { user1Genres = Set(genres) }
-            if let certifications = certifications { user1Certifications = certifications }
+            if let certification = certification { user1Certification = certification }
             if let actors = actors { user1Actors = Set(actors) }
         case .user2:
             if let genres = genres { user2Genres = Set(genres) }
-            if let certifications = certifications { user2Certifications = certifications }
+            if let certification = certification { user2Certification = certification }
             if let actors = actors { user2Actors = Set(actors) }
         }
     }
@@ -51,30 +51,48 @@ struct UserSelection {
     }
     
     static func emptySelections() {
-        user1Genres = nil
-        user1Certifications = nil
-        user1Actors = nil
-        user2Genres = nil
-        user2Certifications = nil
-        user2Actors = nil
+        user1Genres.removeAll()
+        user1Certification = nil
+        user1Actors.removeAll()
+        user2Genres.removeAll()
+        user2Certification = nil
+        user2Actors.removeAll()
         user1Done = false
         user2Done = false
     }
     
     static func combinedGenres() -> String? {
-        guard let user1Genres = self.user1Genres, let user2Genres = self.user2Genres else { return nil }
-        
+        //Return a string with comma separated genre ID’s or nil if no selections
         let combinedSet = user1Genres.union(user2Genres)
-        return combinedSet.map{ String($0) }.joined(separator: ",")
+        if combinedSet.count == 0 {
+            return nil
+        } else {
+            return combinedSet.map{ String($0) }.joined(separator: ",")
+        }
+    }
+    
+    static func combinedActors() -> String? {
+        //Return a string with comma separated actor ID’s or nil if no selections
+        let combinedSet = user1Actors.union(user2Actors)
+        if combinedSet.count == 0 {
+            return nil
+        } else {
+            return combinedSet.map{ String($0) }.joined(separator: ",")
+        }
     }
     
     static func hightestCommonCertification() -> String? {
-        //Guard statement here checking if there are any selections...
+        //If both users selected use the minimum
+        if user1Certification != nil && user2Certification != nil {
+            return user1Certification!.order < user2Certification!.order ? user1Certification!.name : user2Certification!.name
+        }
+        //If only one user selected, use that one
+        if user1Certification != nil { return user1Certification!.name }
+        if user2Certification != nil { return user2Certification!.name }
         
-        //Determine max and min heights
-        let user1SortedCertifications = user1Certifications?.sorted(by: { $0.order < $1.order })
-        
-        return ""
+        //If neither user selected, return nil
+        return nil
     }
+
     
 }

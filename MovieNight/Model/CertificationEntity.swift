@@ -9,12 +9,12 @@
 import Foundation
 
 struct CertificationEntity: Codable {
-    let certification:       String
+    let name:       String
     let order:         Int
     //let dataType:   ParameterKey
     
     enum CodingKeys: String, CodingKey {
-        case certification
+        case name = "certification"
         case order
     }
 }

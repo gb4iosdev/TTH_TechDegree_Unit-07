@@ -9,10 +9,11 @@
 import Foundation
 
 enum TheMovieDB {
-    case discover(genres: String, certifications: String)
+    case discover(genres: String?, certifications: String?, actors: String?)
     case genreList
     case certificationList
     case actorList
+    case image(imageId: String)                    //the part returned from poster_path on the movie
 }
 
 extension TheMovieDB: Endpoint {
@@ -22,27 +23,41 @@ extension TheMovieDB: Endpoint {
         case .genreList: return "/3/genre/movie/list"
         case .certificationList: return "/3/certification/movie/list"
         case .actorList: return "/3/person/popular"
+        case .image: return "/t/p/w92"
         }
     }
     
     var queryParameters: [URLQueryItem] {
         
         var result = [URLQueryItem]()
-        
-        //Set common query items
-        result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: "77bed8fca392b4795936215c684e2e95"))
+        let apiKey = "77bed8fca392b4795936215c684e2e95"
         
         switch self {
-        case .discover(let genres, let certifications):
-            let genre = URLQueryItem(name: ParameterKey.genres.rawValue, value: genres)
-            let certifications = URLQueryItem(name: ParameterKey.certifications.rawValue, value: certifications)
-            result.append(genre)
+        case .discover(let genres, let certifications, let actors):
+            //Add the query items if present
+            if let genres = genres {
+                let genreQueryItem = URLQueryItem(name: ParameterKey.genres.rawValue, value: genres)
+                result.append(genreQueryItem)
+            }
+            if let certifications = certifications {
+                let certificationQueryItem = URLQueryItem(name: ParameterKey.certifications.rawValue, value: certifications)
+                result.append(certificationQueryItem)
+            }
+            if let actors = actors {
+                let actorsQueryItem = URLQueryItem(name: ParameterKey.actors.rawValue, value: actors)
+                result.append(actorsQueryItem)
+            }
+            result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: apiKey))
+
         case .genreList:
             result.append(URLQueryItem(name: ParameterKey.language.rawValue, value: "en-US"))
+            result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: apiKey))
         case .certificationList:
             result.append(URLQueryItem(name: ParameterKey.certificationCountry.rawValue, value: "CA"))
-            break
+            result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: apiKey))
         case .actorList:
+            result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: apiKey))
+        case .image:
             break
         }
         
@@ -50,6 +65,9 @@ extension TheMovieDB: Endpoint {
     }
     
     var base: String {
-        return "https://api.themoviedb.org"
+        switch self {
+        case .image:        return "https://image.tmdb.org"
+        default:            return "https://api.themoviedb.org"
+        }
     }
 }

@@ -11,28 +11,38 @@ import UIKit
 class ResultsTableViewController: UITableViewController {
     
     var endpoint: Endpoint?
+    let client = TheMovieDBAPIClient()
+    
+    lazy var dataSource: ResultsDataSource = {
+        return ResultsDataSource(movies: [], tableView: self.tableView)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let endpoint = endpoint else {
+        guard let endPoint = endpoint else {
             print("Error: Endpoint not initialized")
             return
         }
         
-        print(self.endpoint?.request)
+        tableView.dataSource = dataSource
+        
+        print(endPoint.request)
+        
+        client.getTheMovieDBData(with: endPoint.request, toType: Movies.self) { [unowned self] entities, error in
+            if let entities = entities {
+                DispatchQueue.main.async {
+                    //self.tempDataSource = entities.results
+                    print("entities count is: \(entities.results.count)")
+                    print("entities are: \(entities.results.map{$0.title})")
+                    print("totalpages: \(entities.totalPages)")
+                    self.dataSource.update(with: entities.results)
+                    self.tableView.reloadData()
+                }
+            } else {
+                print("Error is: \(String(describing: error))")
+            }
+        }
+        
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-
 }
