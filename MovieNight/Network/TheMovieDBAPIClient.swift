@@ -27,23 +27,22 @@ class TheMovieDBAPIClient {
         let task = session.dataTask(with: urlRequest) { data, response, error in
             if let data = data {
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    completion(nil, StarWarsAPIError.requestFailed)
+                    completion(nil, APIError.requestFailed)
                     return
                 }
                 if httpResponse.statusCode == 200 {
                     do {
                         let entity = try self.decoder.decode(type, from: data)
                         completion(entity, nil)
-                        //print("Got to here")
                         
                     } catch {
-                        completion(nil, StarWarsAPIError.jsonParsingFailure)
+                        completion(nil, APIError.jsonParsingFailure)
                     }
                 } else {
-                    completion(nil, StarWarsAPIError.responseUnsuccessful(statusCode: httpResponse.statusCode))
+                    completion(nil, APIError.responseUnsuccessful(statusCode: httpResponse.statusCode))
                 }
             } else if let error = error {
-                completion(nil, StarWarsAPIError.noDataReturnedFromDataTask(detail: error.localizedDescription))
+                completion(nil, APIError.noDataReturnedFromDataTask(detail: error.localizedDescription))
             }
         }
         

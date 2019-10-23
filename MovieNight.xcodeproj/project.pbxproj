@@ -20,7 +20,7 @@
 		867D8FB02354D82B00A95E53 /* UserSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D8FAF2354D82B00A95E53 /* UserSelection.swift */; };
 		867D8FB62354DA4F00A95E53 /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D8FB52354DA4F00A95E53 /* ListTableViewController.swift */; };
 		867D8FB82354DBB600A95E53 /* TheMovieDBAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D8FB72354DBB600A95E53 /* TheMovieDBAPIClient.swift */; };
-		867D8FBA2354DC9E00A95E53 /* StarWarsAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D8FB92354DC9E00A95E53 /* StarWarsAPIError.swift */; };
+		867D8FBA2354DC9E00A95E53 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D8FB92354DC9E00A95E53 /* APIError.swift */; };
 		86806A1723533F6C004F1580 /* ParameterKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86806A1623533F6C004F1580 /* ParameterKey.swift */; };
 		86806A1923533F94004F1580 /* Show.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86806A1823533F94004F1580 /* Show.swift */; };
 		86806A1D23534002004F1580 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86806A1C23534002004F1580 /* String.swift */; };
@@ -56,7 +56,7 @@
 		867D8FAF2354D82B00A95E53 /* UserSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelection.swift; sourceTree = "<group>"; };
 		867D8FB52354DA4F00A95E53 /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		867D8FB72354DBB600A95E53 /* TheMovieDBAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheMovieDBAPIClient.swift; sourceTree = "<group>"; };
-		867D8FB92354DC9E00A95E53 /* StarWarsAPIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarWarsAPIError.swift; sourceTree = "<group>"; };
+		867D8FB92354DC9E00A95E53 /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		86806A1623533F6C004F1580 /* ParameterKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterKey.swift; sourceTree = "<group>"; };
 		86806A1823533F94004F1580 /* Show.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Show.swift; sourceTree = "<group>"; };
 		86806A1C23534002004F1580 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -133,7 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				867D3A6423523149006106C9 /* TheMovieDBNetworkError.swift */,
-				867D8FB92354DC9E00A95E53 /* StarWarsAPIError.swift */,
+				867D8FB92354DC9E00A95E53 /* APIError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -288,7 +288,7 @@
 				868919F2235EF66600EA126D /* MovieDownloader.swift in Sources */,
 				86A5359B235A8F1000B9B532 /* User.swift in Sources */,
 				867D3A6523523149006106C9 /* TheMovieDBNetworkError.swift in Sources */,
-				867D8FBA2354DC9E00A95E53 /* StarWarsAPIError.swift in Sources */,
+				867D8FBA2354DC9E00A95E53 /* APIError.swift in Sources */,
 				868919F0235EF3E000EA126D /* ResultsDataSource.swift in Sources */,
 				867D8FB02354D82B00A95E53 /* UserSelection.swift in Sources */,
 				86609607235FC47000431591 /* MovieCell.swift in Sources */,
