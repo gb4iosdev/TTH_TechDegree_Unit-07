@@ -35,18 +35,16 @@ class ResultsDataSource: NSObject, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        //let movie = movie(at: indexPath)
-        //movieCell.title = movie.name
-        //movieCell.subTitle = movie.longDescription
-        //movieCell.accessoryType = .disclosureIndicator
-        movieCell.title.text = movies[indexPath.row].title
-        movieCell.subTitle.text = movies[indexPath.row].overview
+        let movie = movies[indexPath.row]
+        movieCell.title.text = movie.title
+        movieCell.subTitle.text = movie.overview
+        movieCell.accessoryType = .disclosureIndicator
         
-        //movieCell.artwork = movie.artworkState == .downloaded ? movie.artwork! : UIImage(named: "MovieImagePlaceholder")!
+        movieCell.artwork.image = movie.artworkState == .downloaded ? movie.artwork! : UIImage(named: "iTunesArtwork")!
         
-        //        if movie.artworkState == .placeholder {
-        //            downloadArtworkForMovie(movie, atIndexPath: indexPath)
-        //        }
+        if movie.artworkState == .placeholder {
+            downloadArtworkForMovie(movie, at: indexPath)
+        }
         
         return movieCell
     }
@@ -64,5 +62,28 @@ class ResultsDataSource: NSObject, UITableViewDataSource {
     func append(movies: [Movie]) {
         self.movies.append(contentsOf: movies)
     }
+    
+    func downloadArtworkForMovie (_ movie: Movie, at indexPath: IndexPath) {
+        if let _ = pendingOperations.downloadsInProgress[indexPath] {
+            return
+        }
+        
+        let downloader = MovieDownloader(movie: movie)
+        
+        downloader.completionBlock = {
+            if downloader.isCancelled {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+        
+        pendingOperations.downloadsInProgress[indexPath] = downloader
+        pendingOperations.downloadQueue.addOperation(downloader)
+    }
+
     
 }

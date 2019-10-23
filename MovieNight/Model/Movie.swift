@@ -13,19 +13,19 @@ import UIKit
 class Movie:Codable {
     var title: String
     var overview: String
-//    var artworkId: String
+    var artworkId: String
     var artwork: UIImage?
     var artworkState: MovieArtworkDownloadState = .placeholder
     
     init(title: String, overview: String, artworkId: String) {
-    self.title = title
-    self.overview = overview
-//    self.artworkId = artworkId
+        self.title = title
+        self.overview = overview
+        self.artworkId = artworkId
     }
     
     enum CodingKeys: String, CodingKey {
         case title
         case overview
-//        case artworkId
+        case artworkId = "poster_path"
     }
 }
