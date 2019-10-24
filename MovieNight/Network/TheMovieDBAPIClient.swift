@@ -39,7 +39,13 @@ class TheMovieDBAPIClient {
                         completion(nil, APIError.jsonParsingFailure)
                     }
                 } else {
-                    completion(nil, APIError.responseUnsuccessful(statusCode: httpResponse.statusCode))
+                    //Try to capture TheMovieDB error message
+                    do {
+                        let entity = try self.decoder.decode(TheMovieDBErrorResponse.self, from: data)
+                        print("TMDB Network Error: \(httpResponse.statusCode): \(entity.errorMessage)")
+                    } catch {
+                        completion(nil, APIError.responseUnsuccessful(statusCode: httpResponse.statusCode))
+                    }
                 }
             } else if let error = error {
                 completion(nil, APIError.noDataReturnedFromDataTask(detail: error.localizedDescription))

@@ -13,7 +13,6 @@
 		8640CAA423522DF500E1410A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8640CAA223522DF500E1410A /* LaunchScreen.storyboard */; };
 		86430011235BD32C0064B27F /* ResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86430010235BD32C0064B27F /* ResultsTableViewController.swift */; };
 		86609607235FC47000431591 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86609606235FC47000431591 /* MovieCell.swift */; };
-		867D3A6523523149006106C9 /* TheMovieDBNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D3A6423523149006106C9 /* TheMovieDBNetworkError.swift */; };
 		867D3A6823523240006106C9 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D3A6723523240006106C9 /* Genres.swift */; };
 		867D3A6E23526E33006106C9 /* ExampleURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D3A6D23526E33006106C9 /* ExampleURLs.swift */; };
 		867D8FAC2354B31B00A95E53 /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D8FAB2354B31B00A95E53 /* StartScreenViewController.swift */; };
@@ -33,6 +32,7 @@
 		868919F6235EF72400EA126D /* MovieArtworkDownloadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868919F5235EF72400EA126D /* MovieArtworkDownloadState.swift */; };
 		868919F8235EF8B900EA126D /* PendingOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868919F7235EF8B900EA126D /* PendingOperations.swift */; };
 		868919FA235EFBAE00EA126D /* Movies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868919F9235EFBAE00EA126D /* Movies.swift */; };
+		86A1DDC92361AEC300A0C597 /* TheMovieDBErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A1DDC82361AEC300A0C597 /* TheMovieDBErrorResponse.swift */; };
 		86A53599235A39CE00B9B532 /* CertificationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A53598235A39CE00B9B532 /* CertificationEntity.swift */; };
 		86A5359B235A8F1000B9B532 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5359A235A8F1000B9B532 /* User.swift */; };
 		86AACFC123612610005F959C /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AACFC023612610005F959C /* MovieDetailViewController.swift */; };
@@ -50,7 +50,6 @@
 		8640CAA523522DF500E1410A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86430010235BD32C0064B27F /* ResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTableViewController.swift; sourceTree = "<group>"; };
 		86609606235FC47000431591 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
-		867D3A6423523149006106C9 /* TheMovieDBNetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheMovieDBNetworkError.swift; sourceTree = "<group>"; };
 		867D3A6723523240006106C9 /* Genres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
 		867D3A6D23526E33006106C9 /* ExampleURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleURLs.swift; sourceTree = "<group>"; };
 		867D8FAB2354B31B00A95E53 /* StartScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +69,7 @@
 		868919F5235EF72400EA126D /* MovieArtworkDownloadState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieArtworkDownloadState.swift; sourceTree = "<group>"; };
 		868919F7235EF8B900EA126D /* PendingOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingOperations.swift; sourceTree = "<group>"; };
 		868919F9235EFBAE00EA126D /* Movies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movies.swift; sourceTree = "<group>"; };
+		86A1DDC82361AEC300A0C597 /* TheMovieDBErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheMovieDBErrorResponse.swift; sourceTree = "<group>"; };
 		86A53598235A39CE00B9B532 /* CertificationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationEntity.swift; sourceTree = "<group>"; };
 		86A5359A235A8F1000B9B532 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		86AACFC023612610005F959C /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
@@ -134,7 +134,6 @@
 		867D3A632352311D006106C9 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				867D3A6423523149006106C9 /* TheMovieDBNetworkError.swift */,
 				867D8FB92354DC9E00A95E53 /* APIError.swift */,
 			);
 			path = Error;
@@ -180,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				867D8FB72354DBB600A95E53 /* TheMovieDBAPIClient.swift */,
+				86A1DDC82361AEC300A0C597 /* TheMovieDBErrorResponse.swift */,
 				868919F1235EF66600EA126D /* MovieDownloader.swift */,
 				868919F5235EF72400EA126D /* MovieArtworkDownloadState.swift */,
 				868919F7235EF8B900EA126D /* PendingOperations.swift */,
@@ -290,7 +290,6 @@
 				86806A1D23534002004F1580 /* String.swift in Sources */,
 				868919F2235EF66600EA126D /* MovieDownloader.swift in Sources */,
 				86A5359B235A8F1000B9B532 /* User.swift in Sources */,
-				867D3A6523523149006106C9 /* TheMovieDBNetworkError.swift in Sources */,
 				867D8FBA2354DC9E00A95E53 /* APIError.swift in Sources */,
 				868919F0235EF3E000EA126D /* ResultsDataSource.swift in Sources */,
 				867D8FB02354D82B00A95E53 /* UserSelection.swift in Sources */,
@@ -304,6 +303,7 @@
 				86AACFC123612610005F959C /* MovieDetailViewController.swift in Sources */,
 				86806A1923533F94004F1580 /* Show.swift in Sources */,
 				868919F6235EF72400EA126D /* MovieArtworkDownloadState.swift in Sources */,
+				86A1DDC92361AEC300A0C597 /* TheMovieDBErrorResponse.swift in Sources */,
 				867D3A6823523240006106C9 /* Genres.swift in Sources */,
 				868919FA235EFBAE00EA126D /* Movies.swift in Sources */,
 				868919F8235EF8B900EA126D /* PendingOperations.swift in Sources */,
