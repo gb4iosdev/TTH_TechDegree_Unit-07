@@ -13,6 +13,7 @@ class ResultsTableViewController: UITableViewController {
     var endpoint: Endpoint?
     let client = TheMovieDBAPIClient()
     let moviePageLimit = 10
+    //var temporaryMovies: [Movie] = []   //Temporary store for results of each page fetch
     
     lazy var dataSource: ResultsDataSource = {
         return ResultsDataSource(movies: [], tableView: self.tableView)
@@ -44,9 +45,8 @@ extension ResultsTableViewController {
         client.getTheMovieDBData(with: endpoint.requestForPage(page), toType: Movies.self) { [weak self] entities, error in
             
             if let entities = entities {
-                //Add results to dataSource
+                //Add results to dataSource:
                 self?.dataSource.append(movies: entities.results)
-                
                 //Check if this is the last page to fetch
                 if let pageLimit = self?.moviePageLimit, page < min(entities.totalPages, pageLimit) {
                     self?.fetchMovies(at: endpoint, page: page + 1)
@@ -62,4 +62,24 @@ extension ResultsTableViewController {
         
     }
 }
+
+//MARK: - Segues
+extension ResultsTableViewController {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard segue.identifier == "MovieDetailSegue" else {
+            print("Error:  Segue Identifier not recognized")
+            return
+        }
+        
+        guard let indexPath = tableView.indexPathForSelectedRow, let movieDetailController = segue.destination as? MovieDetailViewController else {
+            print("Error:  Cannot cast segue destination as Movie Detail view controller")
+            return
+        }
+        
+        movieDetailController.movie = dataSource.movie(at: indexPath)
+    }
+}
+
 

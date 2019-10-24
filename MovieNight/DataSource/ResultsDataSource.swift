@@ -40,11 +40,17 @@ class ResultsDataSource: NSObject, UITableViewDataSource {
         movieCell.subTitle.text = movie.overview
         movieCell.accessoryType = .disclosureIndicator
         
-//        movieCell.artwork.image = movie.artworkState == .downloaded ? movie.artwork! : UIImage(named: "iTunesArtwork")!
-//        
-//        if movie.artworkState == .placeholder {
-//            downloadArtworkForMovie(movie, at: indexPath)
-//        }
+        if movie.artworkState == .downloaded {
+            movieCell.artwork.image = movie.artwork!
+            movieCell.artwork.alpha = 1.0
+        } else {
+            movieCell.artwork.image = UIImage(named: "iTunesArtwork")!
+        }
+        //movieCell.artwork.image = movie.artworkState == .downloaded ? movie.artwork! : UIImage(named: "iTunesArtwork")!
+        
+        if movie.artworkState == .placeholder {
+            downloadArtworkForMovie(movie, at: indexPath)
+        }
         
         return movieCell
     }

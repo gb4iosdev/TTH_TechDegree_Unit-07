@@ -70,4 +70,14 @@ extension TheMovieDB: Endpoint {
         default:            return "https://api.themoviedb.org"
         }
     }
+    
+    func requestForImage() -> URLRequest? {
+        switch self {
+        case .image(let imageId):
+            var components = URLComponents(string: base)!
+            components.path = path + imageId
+            return URLRequest(url: components.url!)
+        default:    return nil
+        }
+    }
 }
