@@ -22,17 +22,17 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="81" translatesAutoresizingMaskIntoConstraints="NO" id="Cf8-tE-5SU">
-                                <rect key="frame" x="150.5" y="440" width="113" height="22"/>
+                                <rect key="frame" x="43" y="364.5" width="328" height="97.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nBz-Wz-tyg" userLabel="user1Button">
-                                        <rect key="frame" x="0.0" y="0.0" width="16" height="22"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="123.5" height="97.5"/>
                                         <state key="normal" image="bubble-empty"/>
                                         <connections>
                                             <segue destination="Qj6-vO-ER7" kind="show" identifier="FirstSegue" id="7IE-kV-YOk"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cL-bZ-Wuy" userLabel="user2Button">
-                                        <rect key="frame" x="97" y="0.0" width="16" height="22"/>
+                                        <rect key="frame" x="204.5" y="0.0" width="123.5" height="97.5"/>
                                         <state key="normal" image="bubble-empty"/>
                                         <connections>
                                             <segue destination="Qj6-vO-ER7" kind="show" identifier="FirstSegue" id="oyQ-xa-vHM"/>
@@ -100,37 +100,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="O3r-1g-1uP">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="attributionLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Vhv-qN-79L">
-                                    <rect key="frame" x="8" y="0.0" width="100" height="44"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="MUq-1O-35Q"/>
-                                    </constraints>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This product uses the TMDb API but is not endorsed or certified by TMDb." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQe-09-LOv" userLabel="attributionLabel">
-                                    <rect key="frame" x="116" y="0.0" width="290" height="44"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="PQe-09-LOv" secondAttribute="trailing" constant="8" id="48u-et-wAC"/>
-                                <constraint firstItem="PQe-09-LOv" firstAttribute="leading" secondItem="Vhv-qN-79L" secondAttribute="trailing" constant="8" id="7QS-XA-SUX"/>
-                                <constraint firstItem="Vhv-qN-79L" firstAttribute="leading" secondItem="O3r-1g-1uP" secondAttribute="leading" constant="8" id="DvG-8T-7Vf"/>
-                                <constraint firstItem="PQe-09-LOv" firstAttribute="top" secondItem="O3r-1g-1uP" secondAttribute="top" id="NU6-Wy-1bf"/>
-                                <constraint firstAttribute="bottom" secondItem="Vhv-qN-79L" secondAttribute="bottom" id="Oe9-d6-mPc"/>
-                                <constraint firstItem="Vhv-qN-79L" firstAttribute="top" secondItem="O3r-1g-1uP" secondAttribute="top" id="Slw-xM-hRr"/>
-                                <constraint firstAttribute="bottom" secondItem="PQe-09-LOv" secondAttribute="bottom" id="mLZ-gQ-kyH"/>
-                            </constraints>
-                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TMDBListCell" id="xp4-RK-evh">
-                                <rect key="frame" x="0.0" y="72" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xp4-RK-evh" id="QJ9-vI-G3A">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -297,7 +269,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="attributionLogo" width="358" height="141"/>
         <image name="bg-iphone6plus" width="1241" height="2209"/>
         <image name="bubble-empty" width="123.5" height="97.5"/>
         <image name="iTunesArtwork" width="1024" height="1024"/>

@@ -19,6 +19,7 @@ class ListTableViewController: UITableViewController {
 
     @IBOutlet weak var nextBarButtonItem: UIBarButtonItem!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +38,7 @@ class ListTableViewController: UITableViewController {
         fetch(for: dataType)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TMDBListCell")
+        //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "AttributionHeaderCell")
         
     }
     
@@ -115,6 +117,9 @@ class ListTableViewController: UITableViewController {
             nextViewController.tableView.allowsMultipleSelection = true
         }
         
+        //nextViewController.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "AttributionHeaderCell")
+
+        
         //Push onto Navigation stack
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
@@ -138,6 +143,7 @@ class ListTableViewController: UITableViewController {
         }
     }
     
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let dataType = self.dataType else { return tableView.dequeueReusableCell(withIdentifier: "TMDBListCell")! }
@@ -158,6 +164,17 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let selectedIndexPaths = tableView.indexPathsForSelectedRows else { return }
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return 44.0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        return Attribution.view
         
     }
     

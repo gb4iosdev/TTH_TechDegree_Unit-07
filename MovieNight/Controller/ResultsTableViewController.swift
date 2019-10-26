@@ -38,6 +38,18 @@ class ResultsTableViewController: UITableViewController {
     }
 }
 
+//MARK: - Delegate Methods
+extension ResultsTableViewController {
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return Attribution.view
+    }
+}
+
 //MARK: - Networking
 extension ResultsTableViewController {
     
