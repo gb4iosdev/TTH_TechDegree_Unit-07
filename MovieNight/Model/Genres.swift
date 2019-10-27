@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Model to capture List of genres from Network fetch
 struct Genres: Codable {
     var results: [Entity] = []
     

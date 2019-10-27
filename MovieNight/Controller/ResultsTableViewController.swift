@@ -12,9 +12,9 @@ class ResultsTableViewController: UITableViewController {
     
     var endpoint: Endpoint?
     let client = TheMovieDBAPIClient()
-    let moviePageLimit = 10
-    //var temporaryMovies: [Movie] = []   //Temporary store for results of each page fetch
+    let moviePageLimit = 10     //Constrains the network fetch to this many pages
     
+    //TableView DataSource initialization (lazy)
     lazy var dataSource: ResultsDataSource = {
         return ResultsDataSource(movies: [], tableView: self.tableView)
     }()
@@ -29,10 +29,12 @@ class ResultsTableViewController: UITableViewController {
         
         tableView.dataSource = dataSource
         
-        print(endpoint.request)
+        //print(endpoint.request)
         
+        //Network fetch movies, starting at first page
         fetchMovies(at: endpoint, page: 1)
         
+        //Set navbar title
         self.title = "Recommendations"
         
     }
@@ -50,28 +52,43 @@ extension ResultsTableViewController {
     }
 }
 
+//MARK: - Helper Methods
+extension ResultsTableViewController {
+    
+    func alertUser(withTitle title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(action)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+}
+
 //MARK: - Networking
 extension ResultsTableViewController {
     
     func fetchMovies(at endpoint: Endpoint, page: Int) {
-        client.getTheMovieDBData(with: endpoint.requestForPage(page), toType: Movies.self) { [weak self] entities, error in
-            
-            if let entities = entities {
+        client.fetchJSON(with: endpoint.requestForPage(page), toType: Movies.self) { [weak self] result in
+            switch result {
+            case .success(let results):
                 //Add results to dataSource:
-                self?.dataSource.append(movies: entities.results)
-                //Check if this is the last page to fetch
-                if let pageLimit = self?.moviePageLimit, page < min(entities.totalPages, pageLimit) {
+                self?.dataSource.append(movies: results.results)
+                //Check if this is the last page to fetch, otherwise fetch next page
+                if let pageLimit = self?.moviePageLimit, page < min(results.totalPages, pageLimit) {
                     self?.fetchMovies(at: endpoint, page: page + 1)
-                } else {                   //Have added the last page of data.  Refresh tableView
-                    DispatchQueue.main.async {
-                        self?.tableView.reloadData()
+                } else {                   //Have added the last page of data.  Alert user if no results - otherwise Refresh tableView
+                    if self?.dataSource.movieCount() == 0 {
+                        self?.alertUser(withTitle: "No Movies Found", message: "The selections did not return any movies.  Please reselect")
+                    } else {
+                        DispatchQueue.main.async {
+                            self?.tableView.reloadData()
+                        }
                     }
                 }
-            } else {
+            case .failure(let error):
                 print("Error is: \(String(describing: error))")
             }
         }
-        
     }
 }
 
@@ -90,6 +107,7 @@ extension ResultsTableViewController {
             return
         }
         
+        //Set the movie on the destination detail view controller in accordance with selected cell:
         movieDetailController.movie = dataSource.movie(at: indexPath)
     }
 }

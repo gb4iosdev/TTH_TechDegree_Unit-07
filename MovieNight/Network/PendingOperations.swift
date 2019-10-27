@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Dictionary to track operations in progress using indexPath, and a download Queue to execute the operations.
 class PendingOperations {
     
     var downloadsInProgress = [IndexPath : Operation]()

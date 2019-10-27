@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//Custom table view cell used in the results controller to show movies returned in network fetch.
 class MovieCell: UITableViewCell {
     
     static let reuseIdentifier = "MovieCell"

@@ -8,10 +8,10 @@
 
 import Foundation
 
+//Model to capture a single general entity from Network fetch where only name and ID is required.
 struct Entity: Codable {
     let name:       String
     let id:         Int
-    //let dataType:   ParameterKey
     
     enum CodingKeys: String, CodingKey {
         case name

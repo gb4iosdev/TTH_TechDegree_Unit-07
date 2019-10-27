@@ -10,18 +10,22 @@ import Foundation
 
 struct UserSelection {
     
+    //User 1 selections
     static private var user1Genres = Set<Int>()
-    static private var user1Certification: CertificationEntity?
+    static private var user1Certification: Certification?
     static private var user1Actors = Set<Int>()
     
+    //User 2 selections
     static private var user2Genres = Set<Int>()
-    static private var user2Certification: CertificationEntity?
+    static private var user2Certification: Certification?
     static private var user2Actors = Set<Int>()
     
+    //Selection Status trackers
     static private var user1Done: Bool?
     static private var user2Done: Bool?
     
-    static func update(for user: User, genres: [Int]? = nil, certification: CertificationEntity? = nil, actors: [Int]? = nil) {
+    //Assign entity ID’s to the corresponding stored property for the right user
+    static func update(for user: User, genres: [Int]? = nil, certification: Certification? = nil, actors: [Int]? = nil) {
         switch user {
         case .user1:
             if let genres = genres { user1Genres = Set(genres) }
@@ -42,7 +46,7 @@ struct UserSelection {
         }
     }
     
-    
+    //Return true if user has completed their selection cycle.
     static func doneForUser(_ user: User) -> Bool {
         switch user {
         case .user1: return user1Done ?? false
@@ -50,6 +54,7 @@ struct UserSelection {
         }
     }
     
+    //Remove selections for both users & reset selection status
     static func emptySelections() {
         user1Genres.removeAll()
         user1Certification = nil
@@ -62,7 +67,7 @@ struct UserSelection {
     }
     
     static func combinedGenres() -> String? {
-        //Return a string with comma separated genre ID’s or nil if no selections
+        //Return a string with comma separated genre ID’s (or nil if no selections) for use in the endpoint query item
         let combinedSet = user1Genres.union(user2Genres)
         if combinedSet.count == 0 {
             return nil
@@ -72,7 +77,7 @@ struct UserSelection {
     }
     
     static func combinedActors() -> String? {
-        //Return a string with comma separated actor ID’s or nil if no selections
+        //Return a string with comma separated actor ID’s (or nil if no selections) for use in the endpoint query item
         let combinedSet = user1Actors.union(user2Actors)
         if combinedSet.count == 0 {
             return nil

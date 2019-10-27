@@ -13,7 +13,7 @@ class ListTableViewController: UITableViewController {
     var dataType: DataType?
     var user: User?
     var genres: [Entity] = []
-    var certifications: [CertificationEntity] = []
+    var certifications: [Certification] = []
     var actors: [Entity] = []
     let client = TheMovieDBAPIClient()
 
@@ -23,22 +23,23 @@ class ListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Check for initialization of the data type
         guard let dataType = dataType else {
             print("Error: Entity for TheMovieDB API not initialized")
             return
         }
         
+        //Check that the user has been specified
         guard let _ = user else {
-            print("Error: User not initialized")
+            print("Error: User not specified")
             return
         }
         
-        initializeUI(for: dataType)
+        //Initialize UI – set NavBar title
+        configureUI(for: dataType)
         
+        //Fetch the List data based on the datatype
         fetch(for: dataType)
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TMDBListCell")
-        //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "AttributionHeaderCell")
         
     }
     
@@ -57,7 +58,7 @@ class ListTableViewController: UITableViewController {
             return
         }
         
-        print("selectedIndexPaths are: \(selectedIndexPaths)")
+        //print("selectedIndexPaths are: \(selectedIndexPaths)")
 
         
         switch currentType {      //Save selected entities and Transition to next view controller
@@ -67,7 +68,7 @@ class ListTableViewController: UITableViewController {
             if selectedIndexPaths.count > currentType.maxSelections {
                 alertUser(withTitle: "Too many Genres selected", message: "Please select a maximum of 5 Genres")
             } else {
-                //Save selected entities
+                //Save selected genres & launch next view controller
                 var selectedGenres: [Int] = []
                 for row in selectedIndexPaths.map({ $0.row }) {
                     selectedGenres.append(currentViewController.genres[row].id)
@@ -77,8 +78,8 @@ class ListTableViewController: UITableViewController {
             }
             
         case .certification:
-            //Save selection – should only be one
-            var selectedCertification: CertificationEntity
+            //Save selected certification & launch next view controller
+            var selectedCertification: Certification
             
             selectedCertification = currentViewController.certifications[selectedIndexPaths[0].row]
             UserSelection.update(for: user, certification: selectedCertification)
@@ -100,6 +101,7 @@ class ListTableViewController: UITableViewController {
         }
     }
     
+    //Creates and configures the next view controller and pushes it into view
     func showNextController(after currentType: DataType) {
         
         guard let currentViewController = navigationController?.topViewController as? ListTableViewController else { return }
@@ -117,9 +119,6 @@ class ListTableViewController: UITableViewController {
             nextViewController.tableView.allowsMultipleSelection = true
         }
         
-        //nextViewController.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "AttributionHeaderCell")
-
-        
         //Push onto Navigation stack
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
@@ -136,6 +135,7 @@ class ListTableViewController: UITableViewController {
         
         guard let dataType = self.dataType else { return 0 }
         
+        //Return data source counts based on data type
         switch dataType {
         case .genre: return genres.count
         case .certification: return certifications.count
@@ -148,6 +148,7 @@ class ListTableViewController: UITableViewController {
         
         guard let dataType = self.dataType else { return tableView.dequeueReusableCell(withIdentifier: "TMDBListCell")! }
         if let cell = tableView.dequeueReusableCell(withIdentifier: "TMDBListCell"), let textLabel = cell.textLabel {
+            //Populate the cell based on the data type & return the cell
             switch dataType {
             case .genre: textLabel.text = genres[indexPath.row].name
             case .certification: textLabel.text = certifications[indexPath.row].name
@@ -161,11 +162,6 @@ class ListTableViewController: UITableViewController {
     }
     
     // MARK: - Table view delegate
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let selectedIndexPaths = tableView.indexPathsForSelectedRows else { return }
-        
-    }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
@@ -184,9 +180,12 @@ class ListTableViewController: UITableViewController {
 //MARK: - Helper Methods
 extension ListTableViewController {
     
-    func initializeUI(for type: DataType) {
+    func configureUI(for type: DataType) {
         //Navigation Bar Title
         self.title = type.title()
+        
+        //Register custom cell.
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TMDBListCell")
     }
     
     func alertUser(withTitle title: String, message: String) {
@@ -202,46 +201,50 @@ extension ListTableViewController {
 //MARK: - Networking
 extension ListTableViewController {
     
+    //Network call – determine data type then fetch the corresponding list.  If successful, populate the dataSource and reload data.
     func fetch(for dataType: DataType) {
+        
         switch dataType {
         case .genre:
-            client.getTheMovieDBData(with: dataType.endPoint.request, toType: Genres.self) { [unowned self] entities, error in
-                if let entities = entities {
-                    if let currentViewController = self.navigationController?.topViewController as? ListTableViewController {
-                        currentViewController.genres = entities.results
-                    }
+            client.fetchJSON(with: dataType.endPoint.request, toType: Genres.self) {
+                [weak self] result in
+                guard let currentViewController = self?.navigationController?.topViewController as? ListTableViewController else { return }
+                switch result {
+                case .success(let results):
+                    currentViewController.genres = results.results
                     DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        self?.tableView.reloadData()
                     }
-                } else {
-                    print("Error is: \(String(describing: error))")
+                case .failure(let error):
+                    print("Error:  Fetching list data: \(error)")
                 }
             }
         case .certification:
-            client.getTheMovieDBData(with: dataType.endPoint.request, toType: Certifications.self) { [unowned self] entities, error in
-                if let entities = entities {
-                    if let currentViewController = self.navigationController?.topViewController as? ListTableViewController {
-                        currentViewController.certifications = entities.results.results
+            client.fetchJSON(with: dataType.endPoint.request, toType: Certifications.self) { [weak self] result in
+                guard let currentViewController = self?.navigationController?.topViewController as? ListTableViewController else { return }
+                switch result {
+                case .success(let results):
+                        currentViewController.certifications = results.results.results
                         currentViewController.certifications.sort(by: { $0.order < $1.order })
-                    }
                     DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        self?.tableView.reloadData()
                     }
-                } else {
-                    print("Error is: \(String(describing: error))")
+                case .failure(let error):
+                    print("Error:  Fetching list data: \(error)")
                 }
             }
         case .actor:
-            client.getTheMovieDBData(with: dataType.endPoint.request, toType: Actors.self) { [unowned self] entities, error in
-                if let entities = entities {
-                    if let currentViewController = self.navigationController?.topViewController as? ListTableViewController {
-                        currentViewController.actors = entities.results
-                    }
+            client.fetchJSON(with: dataType.endPoint.request, toType: Actors.self) {
+                [weak self] result in
+                guard let currentViewController = self?.navigationController?.topViewController as? ListTableViewController else { return }
+                switch result {
+                case .success(let results):
+                    currentViewController.actors = results.results
                     DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        self?.tableView.reloadData()
                     }
-                } else {
-                    print("Error is: \(String(describing: error))")
+                case .failure(let error):
+                    print("Error:  Fetching list data: \(error)")
                 }
             }
         }

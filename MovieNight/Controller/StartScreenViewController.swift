@@ -12,6 +12,7 @@ class StartScreenViewController: UIViewController {
     
     var activeUser: User?
     
+    //Outlet variables
     @IBOutlet weak var user1SelectionBubble: UIButton!
     @IBOutlet weak var user2SelectionBubble: UIButton!
     @IBOutlet weak var viewResultsButton: UIButton!
@@ -81,7 +82,7 @@ extension StartScreenViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "FirstSegue" {
+        if segue.identifier == "FirstSegue" {   //User selection bubble pressed.  User is selecting movie parameters
             guard let nextListController = segue.destination as? ListTableViewController else {
                 print("Error:  Cannot cast tableView controller from segue destination view controller")
                 return
@@ -92,19 +93,21 @@ extension StartScreenViewController {
                 return
             }
             
+            //Set user based on selectionBubble pressed.
             if sender === user1SelectionBubble {
                 activeUser = .user1
             } else if sender === user2SelectionBubble {
                 activeUser = .user2
             }
             
+            //Initialize key properties on the destination View Controller
             nextListController.dataType = .genre
             nextListController.user = activeUser
             nextListController.tableView.allowsMultipleSelection = true
             
-        } else if segue.identifier == "ResultsSegue" {
+        } else if segue.identifier == "ResultsSegue" {  //View Results button pressed
             guard let resultsListController = segue.destination as? ResultsTableViewController else {
-                print("Error:  Cannot cast tableView controller from segue destination view controller")
+                print("Error:  Cannot cast Table View controller from segue destination view controller")
                 return
             }
             

@@ -10,6 +10,7 @@ import Foundation
 
 import UIKit
 
+//Model to capture a single movie entity from ‘discover’ Network fetch, and capture artwork download state
 class Movie:Codable {
     var title: String
     var overview: String

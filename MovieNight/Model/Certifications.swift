@@ -8,14 +8,8 @@
 
 import Foundation
 
-//struct Certifications: Codable {
-//    var results: [Entity] = []
-//
-//    enum CodingKeys: String, CodingKey {
-//        case results
-//    }
-//}
-
+//Model to capture List of certifications from Network fetch.
+//Note that the final certification array is captured in the embedded CertificationList type.
 struct Certifications: Codable {
     var results: CertificationList
     
@@ -24,7 +18,7 @@ struct Certifications: Codable {
     }
     
     struct CertificationList: Codable {
-        var results: [CertificationEntity]
+        var results: [Certification]
         
         enum CodingKeys: String, CodingKey {
             case results = "CA"

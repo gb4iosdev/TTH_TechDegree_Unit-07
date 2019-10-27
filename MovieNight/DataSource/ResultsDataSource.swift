@@ -14,6 +14,7 @@ class ResultsDataSource: NSObject, UITableViewDataSource {
     let pendingOperations = PendingOperations()
     let tableView: UITableView
     
+    //Initialize with set of movies and with reference to the table view linked to this data source.
     init(movies: [Movie], tableView: UITableView) {
         self.movies = movies
         self.tableView = tableView
@@ -38,16 +39,15 @@ class ResultsDataSource: NSObject, UITableViewDataSource {
         let movie = movies[indexPath.row]
         movieCell.title.text = movie.title
         movieCell.subTitle.text = movie.overview
-        movieCell.accessoryType = .disclosureIndicator
         
-        if movie.artworkState == .downloaded {
+        if movie.artworkState == .downloaded {  //If move artwork has already been downloaded, use that
             movieCell.artwork.image = movie.artwork!
             movieCell.artwork.alpha = 1.0
-        } else {
+        } else {    //Otherwise set the default image for the immediate rendering
             movieCell.artwork.image = UIImage(named: "iTunesArtwork")!
         }
-        //movieCell.artwork.image = movie.artworkState == .downloaded ? movie.artwork! : UIImage(named: "iTunesArtwork")!
         
+        //if Artwork state is placeholder, attempt a download:
         if movie.artworkState == .placeholder {
             downloadArtworkForMovie(movie, at: indexPath)
         }
@@ -61,19 +61,22 @@ class ResultsDataSource: NSObject, UITableViewDataSource {
         return movies[indexPath.row]
     }
     
-    func update(with movies: [Movie]) {
-        self.movies = movies
-    }
-    
     func append(movies: [Movie]) {
         self.movies.append(contentsOf: movies)
     }
     
+    func movieCount() -> Int {
+        return movies.count
+    }
+    
     func downloadArtworkForMovie (_ movie: Movie, at indexPath: IndexPath) {
+        
+        //Don’t do anything if this download is already in progress.
         if let _ = pendingOperations.downloadsInProgress[indexPath] {
             return
         }
         
+        //Otherwise instantiate a MovieDownloader operation, set it’s completion handler, register the operation in the tracker dictionary (downloadsInProgress), and add it to the queue for execution.
         let downloader = MovieDownloader(movie: movie)
         
         downloader.completionBlock = {

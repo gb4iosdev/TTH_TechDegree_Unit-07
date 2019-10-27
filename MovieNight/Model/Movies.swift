@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Model to capture list of movies returned from ‘discover’ Network fetch.
 class Movies: Codable {
     var results: [Movie]
     var totalPages: Int

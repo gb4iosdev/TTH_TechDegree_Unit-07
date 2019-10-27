@@ -16,6 +16,7 @@ enum TheMovieDB {
     case image(imageId: String)                    //the part returned from poster_path on the movie
 }
 
+//conforms to the Endpoint protocol to assist with URL creation.
 extension TheMovieDB: Endpoint {
     var path: String {
         switch self {
@@ -33,6 +34,7 @@ extension TheMovieDB: Endpoint {
         let apiKey = "77bed8fca392b4795936215c684e2e95"
         
         switch self {
+        //Main Discover query for movie fetches.
         case .discover(let genres, let certifications, let actors):
             //Add the query items if present
             if let genres = genres {
@@ -49,6 +51,7 @@ extension TheMovieDB: Endpoint {
             }
             result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: apiKey))
             result.append(URLQueryItem(name: ParameterKey.sortBy.rawValue, value: "popularity.desc"))
+        //List query parameters for each data type.
         case .genreList:
             result.append(URLQueryItem(name: ParameterKey.language.rawValue, value: "en-US"))
             result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: apiKey))
@@ -57,6 +60,7 @@ extension TheMovieDB: Endpoint {
             result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: apiKey))
         case .actorList:
             result.append(URLQueryItem(name: ParameterKey.api_key.rawValue, value: apiKey))
+        //Image query handled separately.
         case .image:
             break
         }
@@ -71,6 +75,7 @@ extension TheMovieDB: Endpoint {
         }
     }
     
+    //Image request handled separately to bypass QueryParameters creation.  No parameters required for this endpoint.
     func requestForImage() -> URLRequest? {
         switch self {
         case .image(let imageId):

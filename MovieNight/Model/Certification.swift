@@ -8,10 +8,10 @@
 
 import Foundation
 
-struct CertificationEntity: Codable {
+//Model to capture a single Certification from Network fetch
+struct Certification: Codable {
     let name:       String
-    let order:         Int
-    //let dataType:   ParameterKey
+    let order:         Int  //Used to sort by certification
     
     enum CodingKeys: String, CodingKey {
         case name = "certification"

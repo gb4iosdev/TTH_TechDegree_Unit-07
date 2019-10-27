@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Model to capture List of actors from Network fetch
 struct Actors: Codable {
     var results: [Entity]
     

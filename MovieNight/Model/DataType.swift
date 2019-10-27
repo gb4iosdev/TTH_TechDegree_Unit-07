@@ -13,6 +13,7 @@ enum DataType: Int {
     case certification
     case actor
     
+    //Return the endpoint associated with the data type
     var endPoint: TheMovieDB {
         switch self {
         case .genre: return .genreList
@@ -39,6 +40,7 @@ enum DataType: Int {
         }
     }
     
+    //For View Controller titles
     func title() -> String {
         switch self {
         case .genre: return "Select up to 5 Genres"

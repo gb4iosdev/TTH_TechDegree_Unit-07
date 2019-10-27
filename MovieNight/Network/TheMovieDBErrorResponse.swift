@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Specified TMDB error model returned when HTTP Status code != 200
 struct TheMovieDBErrorResponse: Codable {
     let code: Int
     let errorMessage: String
@@ -16,8 +17,4 @@ struct TheMovieDBErrorResponse: Codable {
         case code = "status_code"
         case errorMessage = "status_message"
     }
-    
-//    func httpCode() -> Int? {
-//        return TheMovieDBNetworkError.httpErrorNum[self.code]
-//    }
 }

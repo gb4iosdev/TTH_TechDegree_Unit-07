@@ -8,6 +8,7 @@
 
 import Foundation
 
+//Capture download state to avoid duplicate fetching
 enum MovieArtworkDownloadState {
     case placeholder
     case downloaded

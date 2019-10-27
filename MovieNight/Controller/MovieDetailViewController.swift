@@ -24,6 +24,7 @@ class MovieDetailViewController: UIViewController {
             return
         }
         
+        //If movie is assigned update the UI using the movie properties.
         artworkImageView.image = movie.artwork
         movieOverviewLabel.text = movie.overview
         self.title = movie.title

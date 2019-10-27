@@ -8,6 +8,7 @@
 
 import Foundation
 
+//To channel user selections to the right user
 enum User {
     case user1
     case user2
