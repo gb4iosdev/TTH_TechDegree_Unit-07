@@ -208,43 +208,43 @@ extension ListTableViewController {
         case .genre:
             client.fetchJSON(with: dataType.endPoint.request, toType: Genres.self) {
                 [weak self] result in
-                guard let currentViewController = self?.navigationController?.topViewController as? ListTableViewController else { return }
-                switch result {
-                case .success(let results):
-                    currentViewController.genres = results.results
-                    DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    guard let currentViewController = self?.navigationController?.topViewController as? ListTableViewController else { return }
+                    switch result {
+                    case .success(let results):
+                        currentViewController.genres = results.results
                         self?.tableView.reloadData()
+                    case .failure(let error):
+                        print("Error:  Fetching list data: \(error)")
                     }
-                case .failure(let error):
-                    print("Error:  Fetching list data: \(error)")
                 }
             }
         case .certification:
             client.fetchJSON(with: dataType.endPoint.request, toType: Certifications.self) { [weak self] result in
-                guard let currentViewController = self?.navigationController?.topViewController as? ListTableViewController else { return }
-                switch result {
-                case .success(let results):
+                DispatchQueue.main.async {
+                    guard let currentViewController = self?.navigationController?.topViewController as? ListTableViewController else { return }
+                    switch result {
+                    case .success(let results):
                         currentViewController.certifications = results.results.results
                         currentViewController.certifications.sort(by: { $0.order < $1.order })
-                    DispatchQueue.main.async {
                         self?.tableView.reloadData()
+                    case .failure(let error):
+                        print("Error:  Fetching list data: \(error)")
                     }
-                case .failure(let error):
-                    print("Error:  Fetching list data: \(error)")
                 }
             }
         case .actor:
             client.fetchJSON(with: dataType.endPoint.request, toType: Actors.self) {
                 [weak self] result in
-                guard let currentViewController = self?.navigationController?.topViewController as? ListTableViewController else { return }
-                switch result {
-                case .success(let results):
-                    currentViewController.actors = results.results
-                    DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    guard let currentViewController = self?.navigationController?.topViewController as? ListTableViewController else { return }
+                    switch result {
+                    case .success(let results):
+                        currentViewController.actors = results.results
                         self?.tableView.reloadData()
+                    case .failure(let error):
+                        print("Error:  Fetching list data: \(error)")
                     }
-                case .failure(let error):
-                    print("Error:  Fetching list data: \(error)")
                 }
             }
         }
