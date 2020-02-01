@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-iphone6plus" translatesAutoresizingMaskIntoConstraints="NO" id="L2c-Wz-Ohu">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="81" translatesAutoresizingMaskIntoConstraints="NO" id="Cf8-tE-5SU">
-                                <rect key="frame" x="43" y="364.5" width="328" height="97.5"/>
+                                <rect key="frame" x="43" y="414.5" width="328" height="97.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nBz-Wz-tyg" userLabel="user1Button">
                                         <rect key="frame" x="0.0" y="0.0" width="123.5" height="97.5"/>
@@ -64,12 +64,12 @@
                             <constraint firstItem="L2c-Wz-Ohu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="2Di-be-qrO"/>
                             <constraint firstItem="G7u-Mz-dmx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="4fu-Yu-p3h"/>
                             <constraint firstItem="Cf8-tE-5SU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GQM-jA-RxC"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Cf8-tE-5SU" secondAttribute="bottom" constant="400" id="RDx-me-M6y"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Cf8-tE-5SU" secondAttribute="bottom" constant="350" id="RDx-me-M6y"/>
                             <constraint firstItem="L2c-Wz-Ohu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="SFE-bb-S51"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="G7u-Mz-dmx" secondAttribute="trailing" constant="25" id="gev-83-azP"/>
                             <constraint firstItem="G7u-Mz-dmx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pf8-ug-dYN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="G7u-Mz-dmx" secondAttribute="bottom" constant="80" id="s1O-Pb-IIS"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="L2c-Wz-Ohu" secondAttribute="bottom" id="v6W-O8-QUa"/>
+                            <constraint firstAttribute="bottom" secondItem="L2c-Wz-Ohu" secondAttribute="bottom" id="v6W-O8-QUa"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="L2c-Wz-Ohu" secondAttribute="trailing" id="vaE-5j-36l"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

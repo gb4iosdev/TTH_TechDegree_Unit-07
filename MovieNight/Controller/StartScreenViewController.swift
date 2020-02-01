@@ -22,6 +22,8 @@ class StartScreenViewController: UIViewController {
         super.viewDidLoad()
         
         initializeUI()
+        
+        //let result = Result
     }
     
     override func viewDidAppear(_ animated: Bool) {
